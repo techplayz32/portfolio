@@ -1,0 +1,72 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SocialLink from "../components/SocialLink.astro";
+import Icon from "../components/Icon.astro";
+---
+
+<Layout title="Tech's Contact Info">
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6">Contact me</h1>
+
+    <h2 class="text-2xl font-bold mb-4">
+      <Icon name="star" class="inline-block mr-2" />
+      Socials
+    </h2>
+
+    <div class="mb-8">
+      <iframe
+        title="Discord user embed"
+        width="340"
+        height="120"
+        sandbox="allow-scripts"
+        src="https://widgets.vendicated.dev/user?id=852604486333104178&theme=dark&banner=true&full-banner=false&rounded-corners=true&discord-icon=true&badges=true&guess-nitro=false&"
+      ></iframe>
+      <br />
+
+      <div class="space-y-1">
+        <SocialLink
+          platform="Github"
+          username="techplayz32"
+          url="https://github.com/techplayz32"
+          icon="github"
+        />
+        <SocialLink
+          platform="Codeberg"
+          username="techplayz32"
+          url="https://codeberg.org/techplayz32"
+          icon="codeberg"
+        />
+        <SocialLink
+          platform="Telegram"
+          username="@kyrooooooooooooo"
+          url="https://t.me/kyrooooooooooooo"
+          icon="telegram"
+        />
+        <SocialLink
+          platform="XMPP"
+          username="volumetech@disroot.org & volumetech@07f.de"
+          url="https://t.me/kyrooooooooooooo"
+          icon="xmpp"
+        />
+        <SocialLink
+          platform="Fedi"
+          username="@techplayz32 & @volumetech"
+          url="https://mastodon.social/@techplayz32 or https://fe.disroot.org/@volumetech"
+          icon="mastodon"
+        />
+        <SocialLink
+          platform="Email"
+          username="volumetech@getgoogleoff.com"
+          url="mailto:volumetech@getgoogleoff.com"
+          icon="email"
+        />
+        <SocialLink
+          platform="PGP"
+          username="0C6C 5B54 51AC 30C3"
+          url="/pgp_key.asc.txt"
+          icon="pgp"
+        />
+      </div>
+    </div>
+  </div>
+</Layout>

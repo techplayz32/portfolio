@@ -1,0 +1,85 @@
+---
+const { post } = Astro.props;
+const { title, description, pubDate, author, tags, category, image } =
+  post.data;
+
+const formattedDate = new Date(pubDate).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const content = post.body;
+const wordsPerMinute = 200;
+const wordCount = content.split(/\s+/).length;
+const readingTime = Math.ceil(wordCount / wordsPerMinute);
+---
+
+<article
+  class="bg-[var(--bg-secondary)] rounded-lg p-6 border border-[var(--border-color)] hover:border-[#f86] transition-colors"
+  data-post
+  data-category={category}
+  data-tags={tags.join(",")}
+>
+  {
+    image && (
+      <div class="mb-4">
+        <img
+          src={image || "/placeholder.svg"}
+          alt={title}
+          class="w-full h-48 object-cover rounded-md"
+        />
+      </div>
+    )
+  }
+
+  <div class="mb-3">
+    <span class="inline-block px-2 py-1 text-xs rounded bg-[#f86] text-white">
+      {category}
+    </span>
+  </div>
+
+  <h2 class="text-xl font-bold mb-2 hover:text-[#f86] transition-colors">
+    <a href={`/blog/${post.slug}`}>{title}</a>
+  </h2>
+
+  <p class="text-[var(--text-secondary)] mb-4 line-clamp-3">
+    {description}
+  </p>
+
+  <div class="flex flex-wrap gap-2 mb-4">
+    {
+      tags.map((tag: string) => (
+        <span class="px-2 py-1 text-xs rounded bg-[var(--bg-primary)] text-[var(--text-secondary)]">
+          #{tag}
+        </span>
+      ))
+    }
+  </div>
+
+  <div
+    class="flex items-center justify-between text-sm text-[var(--text-secondary)]"
+  >
+    <div class="flex items-center gap-4">
+      <span>By {author}</span>
+      <span>{formattedDate}</span>
+      <span>{readingTime} min read</span>
+    </div>
+
+    <a
+      href={`/blog/${post.slug}`}
+      class="text-[#f86] hover:underline font-medium"
+    >
+      Read more →
+    </a>
+  </div>
+</article>
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

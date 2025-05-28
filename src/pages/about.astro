@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TechStack from '../components/TechStack.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+---
+
+<Layout title="About Me">
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6">About me</h1>
+    
+    <p class="text-lg mb-8">
+      I absolutely love tech and open source! I have been programming since early 2022 and have taught myself a multitude of languages and frameworks since then.
+    </p>
+    
+    <h2 class="text-2xl font-bold mb-4">Tech Stack</h2>
+    <div class="mb-8">
+      <TechStack />
+    </div>
+    
+    <h2 class="text-2xl font-bold mb-4">Projects</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <ProjectCard
+        title="scanfish-web"
+        description="A website made in Next.js for Scanfish, pretty good looking, huh?"
+        language="TypeScript"
+        stars="0 bro"
+        url="scanfish-web"
+        author="techplayz32"
+        authorImage="/images/avatar.jpg"
+      />
+      
+      <ProjectCard
+        title="atlas"
+        description="A unfinished Discord nuker written in Java. (i was dumbass for making nukers bruh, but big project tho)"
+        language="Java"
+        stars="1"
+        url="https://github.com/techplayz32/atlas"
+        author="techplayz32"
+        authorImage="/images/avatar.jpg"
+      />
+      
+      <ProjectCard
+        title="project-apple"
+        description="A re-written `Project Apple` in TypeScript with discord.js"
+        language="TypeScript"
+        stars="1"
+        url="https://github.com/techplayz32/project-apple"
+        author="yourusername"
+        authorImage="/images/avatar.jpg"
+      />
+      
+      <ProjectCard
+        title="Personal Website (portfolio)"
+        description="my website you are here btw"
+        language="Astro"
+        stars="1"
+        url="https://github.com/techplayz32/portfolio"
+        author="techplayz32"
+        authorImage="/images/avatar.jpg"
+      />
+      
+      <ProjectCard
+        title="OpenBloxLoader"
+        description="Open-source bootstrapper for Roblox, written in Go"
+        language="Go"
+        stars="2"
+        url="https://github.com/techplayz32/OpenBloxLoader"
+        author="techplayz32"
+        authorImage="/images/avatar.jpg"
+      />
+      
+      <ProjectCard
+        title="legacy-project-apple"
+        description="A Discord bot written in Rust with serenity-rs library, as open-source replacement to pay-to-use 'bleed' bot."
+        language="Rust"
+        stars="1"
+        url="https://github.com/techplayz32/legacy-project-apple"
+        author="techplayz32"
+        authorImage="/images/avatar.jpg"
+      />
+    </div>
+  </div>
+</Layout>

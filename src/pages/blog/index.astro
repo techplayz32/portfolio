@@ -1,0 +1,181 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import BlogCard from "../../components/BlogCard.astro";
+
+// Get all blog posts and sort by date (newest first)
+const allPosts = await getCollection("blog");
+const publishedPosts = allPosts
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Get unique categories and tags
+const categories = [
+  ...new Set(publishedPosts.map((post) => post.data.category)),
+];
+const allTags = publishedPosts.flatMap((post) => post.data.tags);
+const uniqueTags = [...new Set(allTags)];
+---
+
+<Layout title="Tech's Blog">
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-4">Tech's Blog</h1>
+      <p class="text-lg text-[var(--text-secondary)]">
+        Posts of me in real life and my silly things
+      </p>
+    </div>
+
+    <!-- Categories Filter -->
+    <div class="mb-6">
+      <h2 class="text-lg font-semibold mb-3">Categories</h2>
+      <div class="flex flex-wrap gap-2">
+        <button
+          class="category-filter active px-3 py-1 rounded-full text-sm border border-[var(--border-color)] hover:bg-[var(--bg-secondary)] transition-colors"
+          data-category="all"
+        >
+          All ({publishedPosts.length})
+        </button>
+        {
+          categories.map((category) => {
+            const count = publishedPosts.filter(
+              (post) => post.data.category === category
+            ).length;
+            return (
+              <button
+                class="category-filter px-3 py-1 rounded-full text-sm border border-[var(--border-color)] hover:bg-[var(--bg-secondary)] transition-colors"
+                data-category={category}
+              >
+                {category} ({count})
+              </button>
+            );
+          })
+        }
+      </div>
+    </div>
+
+    <!-- Tags Filter -->
+    <div class="mb-8">
+      <h2 class="text-lg font-semibold mb-3">Tags</h2>
+      <div class="flex flex-wrap gap-2">
+        {
+          uniqueTags.map((tag) => {
+            const count = allTags.filter((t) => t === tag).length;
+            return (
+              <button
+                class="tag-filter px-2 py-1 rounded text-xs bg-[var(--bg-secondary)] hover:bg-[#f86] hover:text-white transition-colors"
+                data-tag={tag}
+              >
+                #{tag} ({count})
+              </button>
+            );
+          })
+        }
+      </div>
+    </div>
+
+    <!-- Blog Posts Grid -->
+    <div class="grid gap-6" id="posts-container">
+      {publishedPosts.map((post) => <BlogCard post={post} />)}
+    </div>
+
+    <!-- No posts message (hidden by default) -->
+    <div
+      id="no-posts"
+      class="hidden text-center py-12 text-[var(--text-secondary)]"
+    >
+      <p>No posts found matching the selected filters.</p>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const categoryFilters = document.querySelectorAll(".category-filter");
+    const tagFilters = document.querySelectorAll(".tag-filter");
+    const postsContainer = document.getElementById("posts-container");
+    const noPostsMessage = document.getElementById("no-posts");
+    const allPosts = Array.from(document.querySelectorAll("[data-post]"));
+
+    let activeCategory = "all";
+    let activeTags = new Set();
+
+    function filterPosts() {
+      let visiblePosts = 0;
+
+      allPosts.forEach((post) => {
+        const postElement = post as HTMLElement;
+        const postCategory = postElement.dataset.category;
+        const postTags = postElement.dataset.tags?.split(",") || [];
+
+        const categoryMatch =
+          activeCategory === "all" || postCategory === activeCategory;
+        const tagMatch =
+          activeTags.size === 0 ||
+          Array.from(activeTags).some((tag) => postTags.includes(tag as string));
+
+        if (categoryMatch && tagMatch) {
+          postElement.style.display = "block";
+          visiblePosts++;
+        } else {
+          postElement.style.display = "none";
+        }
+      });
+
+      // Show/hide no posts message
+      if (visiblePosts === 0) {
+        noPostsMessage?.classList.remove("hidden");
+        postsContainer?.classList.add("hidden");
+      } else {
+        noPostsMessage?.classList.add("hidden");
+        postsContainer?.classList.remove("hidden");
+      }
+    }
+
+    // Category filter handlers
+    categoryFilters.forEach((filter) => {
+      filter.addEventListener("click", () => {
+        // Remove active class from all category filters
+        categoryFilters.forEach((f) => f.classList.remove("active"));
+
+        // Add active class to clicked filter
+        filter.classList.add("active");
+
+        // Update active category
+        activeCategory = (filter as HTMLElement).dataset.category || "all";
+
+        // Filter posts
+        filterPosts();
+      });
+    });
+
+    // Tag filter handlers
+    tagFilters.forEach((filter) => {
+      filter.addEventListener("click", () => {
+        const tag = (filter as HTMLElement).dataset.tag;
+        if (!tag) return;
+
+        if (activeTags.has(tag)) {
+          // Remove tag from active tags
+          activeTags.delete(tag);
+          filter.classList.remove("bg-[#f86]", "text-white");
+        } else {
+          // Add tag to active tags
+          activeTags.add(tag);
+          filter.classList.add("bg-[#f86]", "text-white");
+        }
+
+        // Filter posts
+        filterPosts();
+      });
+    });
+  });
+</script>
+
+<style>
+  .category-filter.active {
+    background-color: #f86;
+    color: white;
+    border-color: #f86;
+  }
+</style>

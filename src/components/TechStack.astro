@@ -1,0 +1,38 @@
+---
+const categories = [
+  {
+    name: "Backend",
+    technologies: ["go.svg", "node.svg", "bun.svg", "python.svg", "java.svg", "ruby.png", "rust.svg"]
+  },
+  {
+    name: "Frontend",
+    technologies: ["typescript.svg", "react.svg", "njs.svg", "astro.svg"]
+  },
+  {
+    name: "Databases",
+    technologies: ["postgresql.svg", "sqlite.svg"]
+  },
+  {
+    name: "Linux",
+    technologies: ["docker.svg", "fedora.svg", "debian.svg"]
+  }
+];
+---
+
+<div class="space-y-4">
+  {categories.map(category => (
+    <div class="bg-[var(--bg-secondary)] rounded-lg p-4">
+      <h3 class="text-lg font-medium mb-2">{category.name}</h3>
+      <div class="flex flex-wrap gap-3">
+        {category.technologies.map(tech => (
+          <img 
+            src={`/images/tech/${tech}`} 
+            alt={`${tech} logo`} 
+            class="w-8 h-8" 
+            title={tech}
+          />
+        ))}
+      </div>
+    </div>
+  ))}
+</div>

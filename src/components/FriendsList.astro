@@ -1,0 +1,38 @@
+---
+const friends = [
+  { name: "Maxfm4ik", image: "/images/friends/friend1.png", website: "https://maxfm4ik.site" },
+  { name: "funnziesss", image: "/images/friends/friend2.png", website: "https://guns.lol/l1f3rj"  },
+  { name: "Gemdation", image: "/images/friends/friend3.png", website: "https://gemdation.com"  },
+  { name: "ChrisplayzWii", image: "/images/friends/friend4.png", website: "https://chrisplayzwii.github.io"  },
+  { name: "idkwhereisthisname", image: "/images/friends/friend5.png", website: "https://idkwhereisthis.name"  },
+  { name: "Vendicated", image: "/images/friends/friend6.png", website: "https://vendicated.dev"  },
+];
+---
+
+<div>
+  <h2 class="text-xl font-bold mb-4">Also check out my cool friends and just good people (even if they are not my friends)!</h2>
+  <div class="flex flex-wrap gap-2">
+    {friends.map(friend => (
+      <a 
+        href={friend.website} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="block friend-avatar cursor-pointer"
+        title={`Visit ${friend.name}'s website`}
+      >
+        <img 
+          src={friend.image || "/placeholder.svg"} 
+          alt={`${friend.name}'s avatar`} 
+          class="w-12 h-12 rounded-full border-2 border-gray-700 transition-all duration-300"
+        />
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  .friend-avatar:hover img {
+    border-color: #f86;
+    box-shadow: 0 0 10px 2px #f86;
+  }
+</style>

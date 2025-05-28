@@ -1,0 +1,11 @@
+---
+const { platform, username, url, icon } = Astro.props;
+---
+
+<div class="flex items-center gap-4 py-2">
+  <div class="w-6">
+    <img src={`/images/icons/${icon}.svg`} alt={`${platform} icon`} class="w-5 h-5 theme-icon" />
+  </div>
+  <div class="font-medium">{platform}</div>
+  <a href={url} class="text-gray-400">{username}</a>
+</div>

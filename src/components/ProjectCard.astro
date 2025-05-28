@@ -1,0 +1,36 @@
+---
+const { title, description, language, stars, url, author, authorImage } = Astro.props;
+---
+
+<div class="border border-[var(--border-color)] rounded-lg p-4 relative">
+  <div class="flex items-center gap-2 mb-2">
+    <div class="w-6 h-6 rounded-full overflow-hidden">
+      {authorImage && <img src={authorImage || "/placeholder.svg"} alt={`${author}'s avatar`} class="w-full h-full object-cover" />}
+    </div>
+    <span>{author}</span>
+  </div>
+  
+  <h3 class="text-xl font-bold mb-1">{title}</h3>
+  <p class="text-gray-400 mb-4">{description}</p>
+  
+  <div class="flex items-center gap-4">
+    <div class="flex items-center gap-1">
+      <span class={`w-3 h-3 rounded-full ${language === 'TypeScript' ? 'bg-blue-500' : language === 'Java' ? 'bg-orange-500' : language === 'Go' ? 'bg-cyan-500' : language === 'Astro' ? 'bg-orange-500' : 'bg-gray-500'}`}></span>
+      <span>{language}</span>
+    </div>
+    <div class="flex items-center gap-1">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+      <span>{stars}</span>
+    </div>
+  </div>
+  
+  <a href={url} class="absolute top-4 right-4">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link">
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+      <polyline points="15 3 21 3 21 9"/>
+      <line x1="10" x2="21" y1="14" y2="3"/>
+    </svg>
+  </a>
+</div>

@@ -1,0 +1,12 @@
+---
+// A reusable icon component that handles theme switching automatically
+const { name, size = 20, colored = false, class: className = "" } = Astro.props;
+---
+
+<img 
+  src={`/images/icons/${name}.svg`} 
+  alt={`${name} icon`} 
+  width={size} 
+  height={size} 
+  class={`${colored ? 'colored-icon' : 'theme-icon'} ${className}`}
+/>
