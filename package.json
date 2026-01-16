@@ -11,7 +11,7 @@
   "dependencies": {
     "@astrojs/mdx": "^4.3.0",
     "@tailwindcss/vite": "^4.1.7",
-    "astro": "^5.16.5",
+    "astro": "^5.16.11",
     "firacode": "^6.2.0",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-prism-plus": "^2.0.1",
